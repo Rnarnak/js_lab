@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 5 — Таблица</title>
+    <style>body { font-family: Arial, sans-serif; margin: 20px; }</style>
+</head>
+<body>
+    <h2>Вывод таблицы в консоль</h2>
+    <label for="rowCount">Количество строк:</label>
+    <input type="number" id="rowCount" min="1" value="5">
+    <button id="drawBtn">Рисовать</button>
+
+    <p style="color: gray; font-size: 11pt;">(нажми F12, вкладка Console).</p>
+
+    <script>
+        'use strict';
+        document.getElementById('drawBtn').addEventListener('click', function() {
+//колво строк из ввода
+            const rows = parseInt(document.getElementById('rowCount').value, 10);
+            
+            if (isNaN(rows) || rows < 1) {
+                console.error("Неверное количество строк"); //проверка на кол-во
+                return;
+            }
+//начинраем ген животных 3 собаки 2 кота выравнивается с 2й строки
+            const pattern = ['dog', 'dog', 'dog', 'cat', 'cat'];
+            let globalIndex = 0; //счетчик 
+
+            console.clear(); //очищаем консоль 
+
+            for (let r = 0; r < rows; r++) { //цикл для гена строк
+                let currentRow = []; //хран элемов строки
+                
+                for (let c = 0; c < 6; c++) { //проверка на 6 элемов 
+                    const animal = pattern[globalIndex % pattern.length];
+                    currentRow.push(animal); //добавляем в строку
+                    globalIndex++; //увел счетчик
+                }
+                
+                console.log(currentRow.join('\t')); //табул
+            }
+        });
+    </script>
+</body>
+</html>
