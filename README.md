@@ -1,6 +1,7 @@
+
 </head>
 <body>
-    <h1>лабораторные  по JS</h1>
+    <h1>лабораторные  по JS https://rnarnak.github.io/js_lab/ </h1>
     <p>Выберите задание для проверки:</p>
     <ul>
         <li><a href="lab1.1.html">Калькулятор</a></li>
