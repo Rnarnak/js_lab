@@ -1,26 +1,22 @@
 // №1 возведение x в степень n
 /**
  * возводит число x в степень n (n - целое число)
-* @param {number} x - Основание степени
+ * @param {number} x - Основание степени
  * @param {number} n - целое число
- * @returns {number} -результат
+ * @returns {number} - результат
  */
 function pow(x, n) {
     if (n === 0) return 1;
-    
-    // Если степень отрицательная, работаем с инвертированным основанием
     if (n < 0) {
         x = 1 / x;
         n = -n;
     }
-    
     let result = 1;
     for (let i = 0; i < n; i++) {
         result *= x;
     }
     return result;
 }
-
 
 // №2 Сумма чисел до n через new Function
 /**
@@ -39,29 +35,26 @@ const sumTo = new Function('n', `
 
 // №3 проверка високосный год
 /**
- * функция предикат  проверка  года на високосность
+ * функция предикат проверка года на високосность
  * @param {number} year - год для проверки.
  * @returns {boolean} true, если год високосный, иначе false.
  */
 function isLeapYear(year) {
-    return (year % 400 === 0) || (year % 4 === 0 && year % 100 !== 0);
-}
-//№4: факториал числа с BigInt (Рекурсия)
-/**
- * вычисляет факториал числа n! рекурсивно
- * @param {number} n - целое неотрицательное число
- * @returns {bigint} факториал числа n в формате BigInt
- */
-function factorial(n) {
-    // Приводим к BigInt для вычислений без потери точности
-    const bigN = BigInt(n);
-    if (bigN === 0n || bigN === 1n) {
-        return 1n;
-    }
-    return bigN * factorial(n - 1);
+    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
-// №5: число Фибоначчи с BigInt 
+// №4 факториал числа через рекурсию
+/**
+ * вычисляет факториал числа n.
+ * @param {number} n - целое число.
+ * @returns {bigint} факториал числа n в виде BigInt.
+ */
+function factorial(n) {
+    if (n === 0 || n === 1) return 1n;
+    return BigInt(n) * factorial(n - 1);
+}
+
+// №5 Числа Фибоначчи
 /**
  * возвращает n-е число Фибоначчи
  * алгоритм O(n)
@@ -84,10 +77,9 @@ function fib(n) {
     return b;
 }
 
-
 // №6: compare
 /**
- * принимает  x и возвращает функцию для сравнения с y.
+ * принимает x и возвращает функцию для сравнения с y.
  * @param {number} x - число для фиксации внутри замыкания.
  * @returns {function(number): (boolean|null)} анонимная функция, принимающая y.
  */
@@ -98,7 +90,6 @@ function compare(x) {
         return null;
     };
 }
-
 
 // №7: сумма произвольного количества аргументов
 /**
@@ -122,9 +113,7 @@ function addBlackSpot(obj) {
     return obj;
 }
 
-// === ДОБАВЬ ЭТОТ БЛОК В САМЫЙ КОНЕЦ ФАЙЛА ===
-
-// Экспортируем функции в глобальную область видимости window для тестов Mocha
+// Экспортируем функции в глобальное окно браузера для тестов Mocha
 if (typeof window !== 'undefined') {
     window.pow = pow;
     window.sumTo = sumTo;
@@ -136,5 +125,5 @@ if (typeof window !== 'undefined') {
     window.addBlackSpot = addBlackSpot;
 }
 
-// Экспорт для третьей лабораторной работы
+// Экспорт модуля для лабораторной №3
 export { fib };
