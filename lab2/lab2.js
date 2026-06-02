@@ -1,4 +1,3 @@
-
 // №1 возведение x в степень n
 /**
  * возводит число x в степень n (n - целое число)
@@ -123,16 +122,4 @@ function addBlackSpot(obj) {
     obj[symbolKey] = true;
     return obj;
 }
-if (typeof window !== 'undefined') {
-    window.pow = pow;
-    window.sumTo = sumTo;
-    window.isLeapYear = isLeapYear;
-    window.factorial = factorial;
-    window.fib = fib;
-    window.compare = compare;
-    window.sum = sum;
-    window.addBlackSpot = addBlackSpot;
-}
-
-// Экспорт для третьей лабы (оставляем как есть)
 export { fib };
