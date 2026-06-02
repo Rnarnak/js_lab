@@ -107,19 +107,34 @@ function compare(x) {
  * @returns {number} сумма аргументов.
  */
 function sum(...args) {
-    return args.reduce((accumulator, current) => accumulator + current, 0);
+    return args.reduce((acc, val) => acc + val, 0);
 }
 
-
-// №8: добавление символьного свойства из глобального реестра
+// №8: черная метка
 /**
- * добавляет в переданный объект символьное свойство blackSpot=true из глобального реестра.
+ * добавляет свойство Symbol.for('blackSpot') со значением true к объекту.
  * @param {Object} obj - Исходный объект.
- * @returns {Object} Объект с добавленным символьным свойством.
+ * @returns {Object} Тот же объект с добавленным свойством.
  */
 function addBlackSpot(obj) {
-    const symbolKey = Symbol.for("blackSpot");
-    obj[symbolKey] = true;
+    let blackSpot = Symbol.for("blackSpot");
+    obj[blackSpot] = true;
     return obj;
 }
+
+// === ДОБАВЬ ЭТОТ БЛОК В САМЫЙ КОНЕЦ ФАЙЛА ===
+
+// Экспортируем функции в глобальную область видимости window для тестов Mocha
+if (typeof window !== 'undefined') {
+    window.pow = pow;
+    window.sumTo = sumTo;
+    window.isLeapYear = isLeapYear;
+    window.factorial = factorial;
+    window.fib = fib;
+    window.compare = compare;
+    window.sum = sum;
+    window.addBlackSpot = addBlackSpot;
+}
+
+// Экспорт для третьей лабораторной работы
 export { fib };
