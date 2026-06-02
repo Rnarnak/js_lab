@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная работа №4</title>
+</head>
+<body>
+
+    <h1>Лабораторная работа №4</h1>
+    <p> Нажмите <b>F12</b> <b>Console</b>.</p>
+
+    <script type="module">
+        import { Book, isEmpty, addClass, removeClass, runJsonTask, getSecondsToday, formatDate } from './lab4.js';
+
+        console.log("=== ТЕСТИРОВАНИЕ LAB4 ===");
+
+        // 1. Проверка класса Book (Задания 1-3)
+        console.log("\n1-3. Проверка Book:");
+        const b1 = new Book("Чистый код", 2008, 1500);
+        const b2 = new Book("Совершенный код", 2004, 2300);
+        b1.show();
+        
+        const books = [b1, b2];
+        books.sort(Book.compare);
+        console.log("Сортировка по году (от старых к новым):", books.map(b => b.title));
+
+        // 2. Проверка isEmpty (Задание 4)
+        console.log("\n4. Проверка isEmpty:");
+        console.log("Ожидается true для {}:", isEmpty({}));
+        console.log("Ожидается false для {a: 1}:", isEmpty({a: 1}));
+
+        // 3. Проверка классов (Задание 5)
+        console.log("\n5. Проверка addClass / removeClass:");
+        let obj = { className: 'open menu' };
+        addClass(obj, 'new-class');
+        console.log("После addClass:", obj.className); // 'open menu new-class'
+        removeClass(obj, 'open');
+        console.log("После removeClass:", obj.className); // 'menu new-class'
+
+        // 4. Проверка JSON (Задание 6)
+        console.log("\n6. Проверка JSON:");
+        runJsonTask({ id: 10, name: "Иван", roles: ["admin", "user"] });
+
+        // 5. Проверка дат (Задания 7-8)
+        console.log("\n7. Секунд с начала дня сегодня:", getSecondsToday());
+        console.log("8. Форматированная дата сегодня:", formatDate(new Date()));
+
+    </script>
+</body>
+</html>
