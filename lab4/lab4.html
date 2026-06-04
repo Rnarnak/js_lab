@@ -5,63 +5,98 @@
     <title>Лабораторная работа №4</title>
 </head>
 <body>
-
-    <h1>Лабораторная работа №4</h1>
-    <p> Нажмите <b>F12</b> и откройте вкладку <b>Console</b>.</p>
+    <p>Lab 4</p>
 
     <script type="module">
-        // Импортируем корректную функцию активации методов addClassMethods
-        import { Book, isEmpty, addClassMethods, runJsonTask, getSecondsToday, formatDate } from './lab4.js';
+        import { 
+            Book, 
+            isEmpty, 
+            addClassMethods, 
+            getSecondsToday, 
+            formatDate 
+        } from './lab4.js';
 
-        console.log("=== ТЕСТИРОВАНИЕ LAB4 ===");
+        // 1. Создание экземпляра класса Book и вызов метода show
+        const book1 = new Book("Война и мир", 1869, 500);
+        book1.show();
 
-        // 1. Проверка класса Book (Задания 1-3)
-        console.log("\n1-3. Проверка Book:");
-        const b1 = new Book("Чистый код", 2008, 1500);
-        const b2 = new Book("Совершенный код", 2004, 2300);
-        const b3 = new Book("Выразительный JavaScript", 2018, 1200);
+        // 2. Попытка изменить значения свойств
+        const book2 = new Book("Преступление и наказание", 1866, 450);
+        console.log(`До изменения: ${book2.title}, ${book2.pubYear}, ${book2.price}`);
         
-        console.log("Вызов метода show():");
-        b1.show();
+        book2.title = "Идиот";
+        book2.pubYear = 1868;
+        book2.price = 600;
+        console.log(`После изменения: ${book2.title}, ${book2.pubYear}, ${book2.price}`);
         
-        // Тест задания 3 (массив из ТРЕХ экземпляров)
-        const books = [b1, b2, b3];
+        // Попытка установить некорректные значения
+        try {
+            book2.title = "";
+        } catch(e) {
+            console.log(e.message);
+        }
+        
+        try {
+            book2.pubYear = -2020;
+        } catch(e) {
+            console.log(e.message);
+        }
+        
+        try {
+            book2.price = -100;
+        } catch(e) {
+            console.log(e.message);
+        }
+
+        // 3. Сортировка массива книг
+        const books = [
+            new Book("Книга 1", 2000, 300),
+            new Book("Книга 2", 1995, 250),
+            new Book("Книга 3", 2010, 400)
+        ];
+        
+        console.log("До сортировки:");
+        books.forEach(book => console.log(`${book.title} - ${book.pubYear}`));
+        
         books.sort(Book.compare);
-        console.log("Сортировка по году (Book.compare):", books.map(b => `${b.title} (${b.pubYear})`));
-
-        // 2. Проверка isEmpty (Задание 4)
-        console.log("\n4. Проверка isEmpty:");
-        console.log("Ожидается true для {}:", isEmpty({}));
-        console.log("Ожидается false для {a: 1}:", isEmpty({a: 1}));
-        console.log("Ожидается false для [Symbol()]:", isEmpty({[Symbol()]: true}));
         
-        // Тест на неперечисляемое свойство 'name'
-        const hiddenObj = {};
-        Object.defineProperty(hiddenObj, 'name', { value: 'John', enumerable: false });
-        console.log("Ожидается false для объекта с неперечисляемым 'name':", isEmpty(hiddenObj));
+        console.log("После сортировки:");
+        books.forEach(book => console.log(`${book.title} - ${book.pubYear}`));
 
-        // 3. Проверка классов (Задание 5)
-        console.log("\n5. Проверка addClass / removeClass:");
+        // 4. Проверка функции isEmpty
+        console.log(isEmpty({}));
+        console.log(isEmpty({ [Symbol()]: true }));
+        console.log(isEmpty(Object.defineProperty({}, 'name', { value: 'John' })));
+
+        // 5. Проверка addClass и removeClass
         let obj = { className: 'open menu' };
+        obj = addClassMethods(obj);
         
-        // Внедряем методы в объект
-        addClassMethods(obj);
+        obj.addClass('new').addClass('open').addClass('active');
+        console.log(obj.className);
         
-        // Проверяем работу методов и цепочку вызовов
-        obj.addClass('new-class').addClass('open'); 
-        console.log("После addClass (без дублирования 'open'):", obj.className); // 'open menu new-class'
+        obj.removeClass('menu').removeClass('active');
+        console.log(obj.className);
+
+        // 6. Преобразование в JSON
+        const testObj = {
+            name: "Тест",
+            nested: {
+                value: 123
+            }
+        };
         
-        obj.removeClass('open');
-        console.log("После removeClass:", obj.className); // 'menu new-class'
+        const json = JSON.stringify(testObj, null, 2);
+        console.log(json);
+        
+        const obj2 = JSON.parse(json);
+        console.log(JSON.stringify(testObj) === JSON.stringify(obj2));
 
-        // 4. Проверка JSON (Задание 6)
-        console.log("\n6. Проверка JSON:");
-        runJsonTask({ id: 10, name: "Иван", roles: ["admin", "user"] });
+        // 7. getSecondsToday
+        console.log(getSecondsToday());
 
-        // 5. Проверка дат (Задания 7-8)
-        console.log("\n7. Секунд с начала дня сегодня:", getSecondsToday());
-        console.log("8. Форматированная дата сегодня:", formatDate(new Date()));
-
+        // 8. formatDate
+        console.log(formatDate(new Date()));
     </script>
 </body>
 </html>
