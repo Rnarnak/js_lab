@@ -26,19 +26,21 @@ function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
-// №4 факториал числа через рекурсию
+// №4 факториал числа через рекурсию (ИСПРАВЛЕНО для поддержки BigInt-аргументов)
 function factorial(n) {
-    if (n === 0 || n === 1) return 1n;
-    return BigInt(n) * factorial(n - 1);
+    const bigN = BigInt(n);
+    if (bigN === 0n || bigN === 1n) return 1n;
+    return bigN * factorial(bigN - 1n);
 }
 
-// №5 Числа Фибоначчи
+// №5 Числа Фибоначчи (ИСПРАВЛЕНО приведение аргумента)
 function fib(n) {
-    if (n === 0) return 0n;
-    if (n === 1) return 1n;
+    const target = Number(n); // Тесты могут передать число, приводим для цикла
+    if (target === 0) return 0n;
+    if (target === 1) return 1n;
     let a = 0n;
     let b = 1n;
-    for (let i = 2; i <= n; i++) {
+    for (let i = 2; i <= target; i++) {
         let c = a + b;
         a = b;
         b = c;
@@ -57,17 +59,16 @@ function compare(x) {
 
 // №7: сумма произвольного количества аргументов
 function sum(...args) {
-    return args.reduce((acc, val) => acc + val, 0);
+    return args.reduce((acc, current) => acc + current, 0);
 }
 
-// №8: черная метка
+// №8: добавление черной метки через глобальный реестр символов
 function addBlackSpot(obj) {
-    let blackSpot = Symbol.for("blackSpot");
-    obj[blackSpot] = true;
+    obj[Symbol.for("blackSpot")] = true;
     return obj;
 }
 
-// Прокидываем функции в глобальное окно браузера для тестов Mocha
+// Глобальный экспорт для браузера (чтобы Mocha видела функции в window)
 if (typeof window !== 'undefined') {
     window.pow = pow;
     window.sumTo = sumTo;
@@ -78,6 +79,3 @@ if (typeof window !== 'undefined') {
     window.sum = sum;
     window.addBlackSpot = addBlackSpot;
 }
-
-// Экспорт модуля для лабораторной №3
-export { fib };
