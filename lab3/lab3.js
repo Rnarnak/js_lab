@@ -2,9 +2,9 @@
 
 import { fib } from '../lab3/lab2.js';
 /**
- * Возвращает дробную часть числа
- * @param {number} num - Исходное число
- * @returns {number} Дробная часть числа
+ * возвращает дробную часть числа
+ * @param {number} num - исходное число
+ * @returns {number} дробная часть числа
  */
 export function getDecimal(num) {
     const fractional = num - Math.floor(num);
@@ -12,9 +12,9 @@ export function getDecimal(num) {
 }
 
 /**
- * Нормализует URL, добавляя https:// в начало
- * @param {string} url - Исходный URL
- * @returns {string} Нормализованный URL с https://
+ * нормализует URL, добавляя https:// в начало
+ * @param {string} url - исходный URL
+ * @returns {string} нормализованный URL с https://
  */
 export function normalizeUrl(url) {
     let result = url.toLowerCase();
@@ -23,8 +23,8 @@ export function normalizeUrl(url) {
 }
 
 /**
- * Проверяет наличие спама в строке (viagra или XXX)
- * @param {string} str - Проверяемая строка
+ * проверяет наличие спама в строке (viagra или XXX)
+ * @param {string} str - проверяемая строка
  * @returns {boolean} true, если строка содержит спам, иначе false
  */
 export function checkSpam(str) {
@@ -33,10 +33,10 @@ export function checkSpam(str) {
 }
 
 /**
- * Усекает строку до заданной длины, добавляя многоточие в конце
- * @param {string} str - Исходная строка
- * @param {number} maxlength - Максимальная длина строки
- * @returns {string} Усечённая строка
+ * усекает строку до заданной длины, добавляя многоточие в конце
+ * @param {string} str - исходная строка
+ * @param {number} maxlength - максимальная длина строки
+ * @returns {string} усечённая строка
  */
 export function truncate(str, maxlength) {
     if (str.length <= maxlength) {
@@ -46,9 +46,9 @@ export function truncate(str, maxlength) {
 }
 
 /**
- * Преобразует строку с дефисами в camelCase
- * @param {string} str - Исходная строка (например, 'var-test-text')
- * @returns {string} Преобразованная строка в camelCase
+ * преобразует строку с дефисами в camelCase
+ * @param {string} str - исходная строка (например, 'var-test-text')
+ * @returns {string} преобразованная строка в camelCase
  */
 export function camelize(str) {
     const words = str.split('-');
@@ -59,9 +59,9 @@ export function camelize(str) {
 }
 
 /**
- * Делает первую букву строки заглавной
+ * делает первую букву строки заглавной
  * @param {string} str - Исходная строка
- * @returns {string} Строка с заглавной первой буквой
+ * @returns {string} строка с заглавной первой буквой
  */
 function ucFirst(str) {
     if (!str) return str;
@@ -69,9 +69,9 @@ function ucFirst(str) {
 }
 
 /**
- * Возвращает массив чисел Фибоначчи до n-го (не включая его)
- * @param {number} n - Количество чисел Фибоначчи (натуральное число)
- * @returns {bigint[]} Массив чисел Фибоначчи
+ * возвращает массив чисел Фибоначчи до n-го (не включая его)
+ * @param {number} n - количество чисел Фибоначчи (натуральное число)
+ * @returns {bigint[]} массив чисел Фибоначчи
  */
 export function fibs(n) {
     const result = [];
@@ -82,18 +82,18 @@ export function fibs(n) {
 }
 
 /**
- * Возвращает новый массив, отсортированный по убыванию, не изменяя исходный
- * @param {Array[]} arr - Исходный массив чисел
- * @returns {Array[]} Новый массив, отсортированный по убыванию
+ * возвращает новый массив, отсортированный по убыванию, не изменяя исходный
+ * @param {Array[]} arr - исходный массив чисел
+ * @returns {Array[]} новый массив, отсортированный по убыванию
  */
 export function arrReverseSorted(arr) {
     return [...arr].sort((a, b) => b - a);
 }
 
 /**
- * Возвращает массив уникальных значений из исходного массива
- * @param {any[]} arr - Исходный массив с возможными повторениями
- * @returns {any[]} Массив уникальных значений
+ * возвращает массив уникальных значений из исходного массива
+ * @param {any[]} arr - исходный массив с возможными повторениями
+ * @returns {any[]} массив уникальных значений
  */
 export function unique(arr) {
     return [...new Set(arr)];
