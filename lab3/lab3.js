@@ -1,6 +1,6 @@
 'use strict';
 
-import { fib } from '../lab3/lab2_module.js';
+import { fib } from '../lab3/lab2.js';
 /**
  * Возвращает дробную часть числа
  * @param {number} num - Исходное число
