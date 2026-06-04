@@ -126,7 +126,7 @@ function unique(arr) {
     return Array.from(new Set(arr));
 }
 
-// экспортируем все функции как модуль
+// экспортируем все функции как модульп
 export {
     getDecimal,
     normalizeUrl,
