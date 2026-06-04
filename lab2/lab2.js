@@ -71,7 +71,7 @@ function addBlackSpot(obj) {
     return obj;
 }
 
-// Глобальный экспорт для браузера (чтобы Mocha видела функции в объекте window)
+// глобальный экспорт для браузера (чтобы Mocha видела функции в объекте window)
 if (typeof window !== 'undefined') {
     window.pow = pow;
     window.sumTo = sumTo;
