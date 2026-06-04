@@ -6,47 +6,60 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         #primeResult { margin-top: 15px; font-weight: bold; color: #2c3e50; }
+        /*  отступ */
+        form { margin-bottom: 15px; }
     </style>
 </head>
 <body>
     <h2>Поиск простых чисел</h2>
-    <label for="maxNumber">Задайте значение n:</label>
-    <input type="number" id="maxNumber" min="2" value="10">
-    <button id="findBtn">Найти</button>
+    
+    <form id="primeForm">
+        <label for="maxNumber">Задайте значение n:</label>
+        <input type="number" id="maxNumber" min="2" step="1" value="10" required>
+        <button type="submit">Найти</button>
+    </form>
 
     <h3>Результат:</h3>
     <div id="primeResult"></div>
 
     <script>
         'use strict';
-        document.getElementById('findBtn').addEventListener('click', function() {
-//граница n
-            const n = parseInt(document.getElementById('maxNumber').value, 10);
+        
+        // проверка на пустоту
+        function isPrime(x) {
+            if (x < 2) return false;
+            for (let i = 2; i < x; i++) {
+                if (x % i === 0) return false;
+            }
+            return true;
+        }
+
+        document.getElementById('primeForm').addEventListener('submit', function(event) {
+            // отмена перезагрузки страницы при отправке формы
+            event.preventDefault();
+
+            // округление Math.trunc 
+            const n = Math.trunc(Number(document.getElementById('maxNumber').value));
             const resultDiv = document.getElementById('primeResult');
-//начало с 2йки
+
+            // Начало с двойки (проверка)
             if (isNaN(n) || n < 2) {
                 resultDiv.textContent = "Введите число не меньше 2.";
                 return;
             }
-//массив для контейнера
+
+            // Массив для контейнера простыми числами
             let primes = [];
-//перебор от 2х до N
+
+            // Перебор от 2 до N с использованием функции из оригинала
             for (let i = 2; i <= n; i++) {
-                let isPrime = true; //i простое?
-
-                for (let j = 2; j < i; j++) { //проверка делителелей 
-                    if (i % j === 0) { //если остатка нет 
-                        isPrime = false; //составное
-                        break; //прерываем
-                    }
-                }
-
-                if (isPrime) { 
-                    primes.push(i); //если простое добавляем в массив 
+                if (isPrime(i)) {
+                    primes.push(i); // Если простое, добавляем в массив
                 }
             }
 
-            resultDiv.textContent = primes.join(', '); //выводим через запятую с пробелом
+            // вывод результата через запятую с пробелом
+            resultDiv.textContent = primes.join(', ');
         });
     </script>
 </body>
