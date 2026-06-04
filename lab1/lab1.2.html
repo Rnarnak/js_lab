@@ -9,7 +9,8 @@
     <h2>Счет ворон</h2>
     <form id="crowForm">
         <label for="crowCount">Количество ворон:</label>
-        <input type="number" id="crowCount" required min="0">
+        <!-- обход дробного через step -->
+        <input type="number" id="crowCount" required min="0" step="1">
         <button type="submit">Считать</button>
     </form>
 
@@ -18,8 +19,14 @@
         document.getElementById('crowForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const num = parseInt(document.getElementById('crowCount').value, 10); //получаем число
-            if (isNaN(num) || num < 0) return;
+            //защита от дробных(округление) Math.trunc ели уж ввели обойдя step
+            const num = Math.trunc(Number(document.getElementById('crowCount').value)); //получаем число
+            
+            // если число не конечное или отрицательное
+            if (!Number.isFinite(num) || num < 0) {
+                alert('Введите целое неотрицательное число');
+                return;
+            }
 
             let ending = ""; //контейнер для склонений
             const lastDigit = num % 10; //остаток от деления на 10
@@ -43,7 +50,7 @@
                 }
             }
 
-            alert(`На ветке сидит ${num} ${ending}`); //вывод через повещение 
+            alert(`На ветке сидит ${num} ${ending}`); //вывод через оповещение 
         });
     </script>
 </body>
