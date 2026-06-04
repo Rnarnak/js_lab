@@ -142,7 +142,7 @@ export function unique(arr) {
 }
 import {
     getDecimal,
-    divmod, // <-- ОБЯЗАТЕЛЬНО ДОБАВЬ СЮДА
+    divmod, // Убедись, что она тут есть
     ucFirst,
     normalizeUrl,
     checkSpam,
@@ -151,4 +151,4 @@ import {
     fibs,
     arrReverseSorted,
     unique
-} from './lab3.js';
+} from './lab3.js'; 
