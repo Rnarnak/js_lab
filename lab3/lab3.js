@@ -1,18 +1,18 @@
 'use strict';
 
-// Импорт функции fib из lab2 для задания №8 (числа Фибоначчи)
+// импорт  fib из lab2 для  №8
 import { fib } from '../lab3/lab2_module.js';
 
-// Задание 1: Напишите функцию getDecimal(num), которая возвращает дробную часть числа
+// №1: getDecimal(num) возвращающую дробную часть числа
 /**
  * Возвращает дробную часть числа без погрешностей плавающей точки.
- * @param {number} num - Исходное число.
- * @returns {number} Дробная часть числа.
+ * @param {number} num  исходное число.
+ * @returns {number} дробная часть числа.
  */
 export function getDecimal(num) {
     const decimalPart = num - Math.floor(num);
     
-    // Динамически определяем количество знаков после запятой, чтобы не ограничиваться только сотнями
+    // количество знаков после запятой для обхода 100н
     const str = String(num);
     const dotIndex = str.indexOf('.');
     if (dotIndex === -1) return 0;
