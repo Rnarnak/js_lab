@@ -49,7 +49,9 @@
             if (!genderElement || isNaN(age)) return;
 
             const gender = genderElement.value; //получение пола 
-            let message = ""; //текст ответа
+            
+            // Инициализируем дефолтное сообщение из pension.html
+            let message = 'Да кто ты такой?'; 
 
             if (age >= 0 && age <= 17) {
                 message = "Вам работать ещё рано — учитесь";
@@ -59,8 +61,6 @@
                 message = "Скоро пенсия!";
             } else if ((gender === 'male' && age >= 65) || (gender === 'female' && age >= 60)) {
                 message = "Вам пора на пенсию";
-            } else {
-                message = "Да кто ты такой?";
             }
 
             resultTextArea.value = message;
