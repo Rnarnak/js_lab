@@ -1,4 +1,4 @@
-// №1 возведение x в степень n
+// №1 возведение x в степень n (чистый Number)
 function pow(x, n) {
     if (n === 0) return 1;
     if (n < 0) {
@@ -12,7 +12,7 @@ function pow(x, n) {
     return result;
 }
 
-// №2 Сумма чисел до n через new Function
+// №2 Сумма чисел до n через new Function (чистый Number)
 const sumTo = new Function('n', `
     let sum = 0;
     for (let i = 1; i <= n; i++) {
@@ -21,23 +21,26 @@ const sumTo = new Function('n', `
     return sum;
 `);
 
-// №3 проверка високосный год
+// №3 проверка високосный год (чистый Number)
 function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
-// №4 факториал числа через рекурсию (ИСПРАВЛЕНО для поддержки BigInt-аргументов)
+// №4 факториал числа через рекурсию (строго BigInt на выходе)
 function factorial(n) {
+    // Принудительно переводим аргумент в BigInt, чтобы не было путаницы
     const bigN = BigInt(n);
     if (bigN === 0n || bigN === 1n) return 1n;
     return bigN * factorial(bigN - 1n);
 }
 
-// №5 Числа Фибоначчи (ИСПРАВЛЕНО приведение аргумента)
+// №5 Числа Фибоначчи (строго BigInt на выходе)
 function fib(n) {
-    const target = Number(n); // Тесты могут передать число, приводим для цикла
+    // Переводим лимит в обычное число для безопасной работы счетчика цикла i
+    const target = Number(n); 
     if (target === 0) return 0n;
     if (target === 1) return 1n;
+    
     let a = 0n;
     let b = 1n;
     for (let i = 2; i <= target; i++) {
@@ -68,7 +71,7 @@ function addBlackSpot(obj) {
     return obj;
 }
 
-// Глобальный экспорт для браузера (чтобы Mocha видела функции в window)
+// Глобальный экспорт для браузера (чтобы Mocha видела функции в объекте window)
 if (typeof window !== 'undefined') {
     window.pow = pow;
     window.sumTo = sumTo;
