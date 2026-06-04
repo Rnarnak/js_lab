@@ -140,3 +140,15 @@ export function arrReverseSorted(arr) {
 export function unique(arr) {
     return [...new Set(arr)];
 }
+import {
+    getDecimal,
+    divmod, // <-- ОБЯЗАТЕЛЬНО ДОБАВЬ СЮДА
+    ucFirst,
+    normalizeUrl,
+    checkSpam,
+    truncate,
+    camelize,
+    fibs,
+    arrReverseSorted,
+    unique
+} from './lab3.js';
