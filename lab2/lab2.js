@@ -1,4 +1,4 @@
-// №1 возведение x в степень n (чистый Number)
+// №1 возведение x в степень n 
 function pow(x, n) {
     if (n === 0) return 1;
     if (n < 0) {
@@ -12,7 +12,7 @@ function pow(x, n) {
     return result;
 }
 
-// №2 Сумма чисел до n через new Function (чистый Number)
+// №2 Сумма чисел до n через new Function
 const sumTo = new Function('n', `
     let sum = 0;
     for (let i = 1; i <= n; i++) {
@@ -21,12 +21,12 @@ const sumTo = new Function('n', `
     return sum;
 `);
 
-// №3 проверка високосный год (чистый Number)
+// №3 проверка високосный год
 function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
-// №4 факториал числа через рекурсию (строго BigInt на выходе)
+// №4 факториал числа через рекурсию (BigInt)
 function factorial(n) {
     // Принудительно переводим аргумент в BigInt, чтобы не было путаницы
     const bigN = BigInt(n);
@@ -34,9 +34,9 @@ function factorial(n) {
     return bigN * factorial(bigN - 1n);
 }
 
-// №5 Числа Фибоначчи (строго BigInt на выходе)
+// №5 Числа Фибоначчи (BigInt)
 function fib(n) {
-    // Переводим лимит в обычное число для безопасной работы счетчика цикла i
+    // лимит в обычное число для безопастности счетчика цикла i
     const target = Number(n); 
     if (target === 0) return 0n;
     if (target === 1) return 1n;
@@ -65,7 +65,7 @@ function sum(...args) {
     return args.reduce((acc, current) => acc + current, 0);
 }
 
-// №8: добавление черной метки через глобальный реестр символов
+// №8: addBlackSpot через глобальный реестр символов
 function addBlackSpot(obj) {
     obj[Symbol.for("blackSpot")] = true;
     return obj;
