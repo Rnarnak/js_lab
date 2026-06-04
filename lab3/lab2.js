@@ -9,7 +9,7 @@
 function pow(x, n) {
     if (n === 0) return 1;
     
-    // Если степень отрицательная, работаем с инвертированным основанием
+    // если степень отрицательная, работаем с инвертированным основанием
     if (n < 0) {
         x = 1 / x;
         n = -n;
@@ -23,7 +23,7 @@ function pow(x, n) {
 }
 
 
-// №2 Сумма чисел до n через new Function
+// №2 сумма чисел до n через new Function
 /**
  * вычисляем сумму натуральных чисел от 1 до n включительно
  * @function sumTo
@@ -54,7 +54,7 @@ function isLeapYear(year) {
  * @returns {bigint} факториал числа n в формате BigInt
  */
 function factorial(n) {
-    // Приводим к BigInt для вычислений без потери точности
+    // приводим к BigInt для вычислений без потери точности
     const bigN = BigInt(n);
     if (bigN === 0n || bigN === 1n) {
         return 1n;
