@@ -10,38 +10,42 @@
 </head>
 <body>
     <h2>Ввод числа с проверкой</h2>
-    <a href="https://ya.ru/" id="numberLink">Получить число</a>
+    <a href="../index.html" id="numberLink">Получить число</a>
 
     <script>
         'use strict';
         document.getElementById('numberLink').addEventListener('click', function(event) {
+            // Сразу отменяем дефолтный переход, чтобы контролировать его через JS
             event.preventDefault(); 
 
-            let isSuccess = false; //флаг > 100
-//бескон цикл
+            let num;
+
+            // Бесконечный цикл ввода числа из input-number.html
             while (true) {
-                const input = prompt("Введите число, большее 100:");
-//esc
-                if (input === null) {
-                    isSuccess = false; //флаг нет
-                    break; //прерываем
+                const value = prompt('Введите число больше 100', '');
+                // Если пользователь нажал Отмена (ESC)
+                if (value === null) {
+                    break;
                 }
-//строка в число
-                const parsedNumber = parseFloat(input);
-//если >100 
-                if (!isNaN(parsedNumber) && parsedNumber > 100) {
-                    isSuccess = true; //флаг да
-                    break; //прерываем
+                
+                // Преобразуем строку в число через Number() как в оригинале
+                num = Number(value);
+                
+                // Если число валидно и больше 100 — выходим из цикла
+                if (num > 100) {
+                    break;
                 }
             }
 
-            if (isSuccess) {
-                window.location.href = this.href; //если да переход по href
-            } else {
-                const allowTransition = confirm("Вы отменили ввод. Всё равно перейти на главную страницу?");
-                if (allowTransition) {
-                    window.location.href = this.href; //переход на нач
-                }
+            // Если число успешно введено и оно больше 100, переходим на твой index.html без лишних вопросов
+            if (num > 100) {
+                window.location.href = this.href;
+                return;
+            }
+
+            // Если пользователь отменил ввод, спрашиваем подтверждение (логика из обоих файлов)
+            if (confirm('Вы действительно хотите перейти по ссылке?')) {
+                window.location.href = this.href;
             }
         });
     </script>
