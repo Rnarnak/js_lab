@@ -7,10 +7,11 @@
 <body>
 
     <h1>Лабораторная работа №4</h1>
-    <p> Нажмите <b>F12</b> <b>Console</b>.</p>
+    <p> Нажмите <b>F12</b> и откройте вкладку <b>Console</b>.</p>
 
     <script type="module">
-        import { Book, isEmpty, addClass, removeClass, runJsonTask, getSecondsToday, formatDate } from './lab4.js';
+        // Импортируем корректную функцию активации методов addClassMethods
+        import { Book, isEmpty, addClassMethods, runJsonTask, getSecondsToday, formatDate } from './lab4.js';
 
         console.log("=== ТЕСТИРОВАНИЕ LAB4 ===");
 
@@ -18,23 +19,39 @@
         console.log("\n1-3. Проверка Book:");
         const b1 = new Book("Чистый код", 2008, 1500);
         const b2 = new Book("Совершенный код", 2004, 2300);
+        const b3 = new Book("Выразительный JavaScript", 2018, 1200);
+        
+        console.log("Вызов метода show():");
         b1.show();
         
-        const books = [b1, b2];
+        // Тест задания 3 (массив из ТРЕХ экземпляров)
+        const books = [b1, b2, b3];
         books.sort(Book.compare);
-        console.log("Сортировка по году (от старых к новым):", books.map(b => b.title));
+        console.log("Сортировка по году (Book.compare):", books.map(b => `${b.title} (${b.pubYear})`));
 
         // 2. Проверка isEmpty (Задание 4)
         console.log("\n4. Проверка isEmpty:");
         console.log("Ожидается true для {}:", isEmpty({}));
         console.log("Ожидается false для {a: 1}:", isEmpty({a: 1}));
+        console.log("Ожидается false для [Symbol()]:", isEmpty({[Symbol()]: true}));
+        
+        // Тест на неперечисляемое свойство 'name'
+        const hiddenObj = {};
+        Object.defineProperty(hiddenObj, 'name', { value: 'John', enumerable: false });
+        console.log("Ожидается false для объекта с неперечисляемым 'name':", isEmpty(hiddenObj));
 
         // 3. Проверка классов (Задание 5)
         console.log("\n5. Проверка addClass / removeClass:");
         let obj = { className: 'open menu' };
-        addClass(obj, 'new-class');
-        console.log("После addClass:", obj.className); // 'open menu new-class'
-        removeClass(obj, 'open');
+        
+        // Внедряем методы в объект
+        addClassMethods(obj);
+        
+        // Проверяем работу методов и цепочку вызовов
+        obj.addClass('new-class').addClass('open'); 
+        console.log("После addClass (без дублирования 'open'):", obj.className); // 'open menu new-class'
+        
+        obj.removeClass('open');
         console.log("После removeClass:", obj.className); // 'menu new-class'
 
         // 4. Проверка JSON (Задание 6)
