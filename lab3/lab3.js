@@ -1,16 +1,18 @@
-// импорт из лаб2 для №6
-import { fib } from './lab2.js';
+'use strict';
 
+// Импорт функции fib из lab2 для задания №8 (числа Фибоначчи)
+import { fib } from '../lab3/lab2_module.js';
 
-// №1: получение дробной части числа
+// Задание 1: Напишите функцию getDecimal(num), которая возвращает дробную часть числа
 /**
- * @param {number} num - исходное число.
- * @returns {number} дробная часть числа.
+ * Возвращает дробную часть числа без погрешностей плавающей точки.
+ * @param {number} num - Исходное число.
+ * @returns {number} Дробная часть числа.
  */
-function getDecimal(num) {
+export function getDecimal(num) {
     const decimalPart = num - Math.floor(num);
     
-    // убираем погрешность плавающей точки 
+    // Динамически определяем количество знаков после запятой, чтобы не ограничиваться только сотнями
     const str = String(num);
     const dotIndex = str.indexOf('.');
     if (dotIndex === -1) return 0;
@@ -19,85 +21,94 @@ function getDecimal(num) {
     return Number(decimalPart.toFixed(decimalPlaces));
 }
 
-// №2: Нормализация URL
+// Задание 2: Напишите функцию divmod(dividend, divisor), которая делит числа с остатком
 /**
- * нормализует URL, приводя его строго к протоколу https://.
- * @param {string} url - адрес сайта.
- * @returns {string} нормализованный URL.
+ * Делит числа с остатком и возвращает массив [частное, остаток].
+ * @param {number} dividend - Делимое.
+ * @param {number} divisor - Делитель.
+ * @returns {number[]} Массив вида [частное, остаток].
  */
-function normalizeUrl(url) {
-    if (url.startsWith('https://')) {
-        return url;
+export function divmod(dividend, divisor) {
+    if (divisor === 0 || Number.isNaN(dividend) || Number.isNaN(divisor)) {
+        return [NaN, NaN];
     }
-    if (url.startsWith('http://')) {
-        return 'https://' + url.slice(7);
-    }
-    return 'https://' + url;
+    const quotient = Math.trunc(dividend / divisor);
+    const remainder = dividend % divisor;
+    return [quotient, remainder];
 }
 
-// №3: проверка на спам
+// Задание 3: Напишите функцию ucFirst(str), которая возвращает строку str с заглавным первым символом
 /**
- * проверяет содержит ли строка подстроки 'viagra' или 'xxx' не зависит от регистра
- * @param {string} str - строка  проверки.
- * @returns {boolean} true, если спам иначе false.
+ * Делает первую букву строки заглавной.
+ * @param {string} str - Исходная строка.
+ * @returns {string} Строка с заглавной первой буквой.
  */
-function checkSpam(str) {
-    const lowerStr = str.toLowerCase();
-    return lowerStr.includes('viagra') || lowerStr.includes('xxx');
-}
-
-
-// №4: усечение строки
-/**
- * проверяет длину строки и усекает её с добавлением символа многоточия '…',
- * если она превышает maxlength.
- * @param {string} str - исходная строка
- * @param {number} maxlength - макс длина
- * @returns {string} результат обработки строки
- */
-function truncate(str, maxlength) {
-    if (str.length > maxlength) {
-        // ... через юникод 
-        return str.slice(0, maxlength - 1) + '…';
-    }
-    return str;
-}
-
-// №5: преобразование строки в camelCase
-/**
- * преобразует первый символ строки в верхний регистр
- * функция для camelize
- * @param {string} str - исходная строка
- * @returns {string} строка с заглавным первым символом
- */
-function ucFirst(str) {
+export function ucFirst(str) {
     if (!str) return str;
     return str[0].toUpperCase() + str.slice(1);
 }
 
+// Задание 4: Реализуйте функцию normalizeUrl(url), которая приводит адрес строго к https://
 /**
- * строки вида 'my-short-string' в 'myShortString'.
- * @param {string} str - строка с дефисами.
- * @returns {string} строка в формате camelCase.
+ * Нормализует URL, приводя его к нижнему регистру и протоколу https://.
+ * @param {string} url - Адрес сайта.
+ * @returns {string} Нормализованный URL.
  */
-function camelize(str) {
+export function normalizeUrl(url) {
+    let result = url.toLowerCase();
+    // Удаляем http:// или https:// в начале строки, если они есть
+    result = result.replace(/^https?:\/\//, '');
+    return 'https://' + result;
+}
+
+// Задание 5: Напишите функцию checkSpam(str), которая проверяет строку на наличие спама
+/**
+ * Проверяет наличие подстрок 'viagra' или 'xxx' без учета регистра.
+ * @param {string} str - Проверяемая строка.
+ * @returns {boolean} true, если строка содержит спам, иначе false.
+ */
+export function checkSpam(str) {
+    const lowerStr = str.toLowerCase();
+    return lowerStr.includes('viagra') || lowerStr.includes('xxx');
+}
+
+// Задание 6: Создайте функцию truncate(str, maxlength), которая усекает строку
+/**
+ * Усекает строку до заданной длины и добавляет символ многоточия '…'.
+ * @param {string} str - Исходная строка.
+ * @param {number} maxlength - Максимальная длина строки.
+ * @returns {string} Усечённая строка.
+ */
+export function truncate(str, maxlength) {
+    if (str.length <= maxlength) {
+        return str;
+    }
+    // Заменяем конец строки на символ многоточия (Юникод U+2026), чтобы длина стала равна maxlength
+    return str.slice(0, maxlength - 1) + '…';
+}
+
+// Задание 7: Напишите функцию camelize(str), которая преобразует строку вида 'my-short-string' в 'myShortString'
+/**
+ * Преобразует строку с дефисами в camelCase.
+ * @param {string} str - Исходная строка.
+ * @returns {string} Строка в формате camelCase.
+ */
+export function camelize(str) {
     return str
         .split('-')
         .map((word, index) => {
-            // первый элемент оставляем как есть остальные делаем с заглавной буквы
             return index === 0 ? word : ucFirst(word);
         })
         .join('');
 }
 
-
-//№6: массив чисел Фибоначчи
+// Задание 8: Напишите функцию fibs(n), которая возвращает массив чисел Фибоначчи до n-го
 /**
- * возвращает массив, заполненный первыми n числами Фибоначчи (не включая n-е).
- * @param {number} n - количество элементов.
- * @returns {bigint[]} массив чисел Фибоначчи типа BigInt.
+ * Возвращает массив, заполненный первыми n числами Фибоначчи (не включая n-е) типа BigInt.
+ * @param {number} n - Количество элементов.
+ * @returns {bigint[]} Массив чисел Фибоначчи.
  */
-function fibs(n) {
+export function fibs(n) {
     const result = [];
     for (let i = 0; i < n; i++) {
         result.push(fib(i));
@@ -105,35 +116,22 @@ function fibs(n) {
     return result;
 }
 
-// №7: сортировка массива по убыванию
+// Задание 9: Напишите функцию arrReverseSorted(arr), которая сортирует числовой массив по убыванию
 /**
- * возвращает новый массив отсортированный по убыванию исходный не меняется
- * @param {number[]} arr - неупорядоченный массив чисел.
- * @returns {number[]} новый отсортированный массив.
+ * Возвращает новый массив, отсортированный по убыванию, не изменяя исходный.
+ * @param {number[]} arr - Неупорядоченный массив чисел.
+ * @returns {number[]} Новый отсортированный массив.
  */
-function arrReverseSorted(arr) {
-    // копия через slice() 
-    return arr.slice().sort((a, b) => b - a);
+export function arrReverseSorted(arr) {
+    return [...arr].sort((a, b) => b - a);
 }
 
-// Задание 8: Фильтрация уникальных значений через Set
+// Задание 10: Напишите функцию unique(arr), которая вернёт массив уникальных значений
 /**
- * возвращает массив уникальных значений через Set.
- * @param {Array} arr - исходный массив с дубликатами.
- * @returns {Array} массив уникальных элементов.
+ * Возвращает массив уникальных значений из исходного массива с помощью Set.
+ * @param {Array} arr - Исходный массив с возможными повторениями.
+ * @returns {Array} Массив уникальных значений.
  */
-function unique(arr) {
-    return Array.from(new Set(arr));
+export function unique(arr) {
+    return [...new Set(arr)];
 }
-
-// экспортируем все функции как модульп
-export {
-    getDecimal,
-    normalizeUrl,
-    checkSpam,
-    truncate,
-    camelize,
-    fibs,
-    arrReverseSorted,
-    unique
-};
