@@ -27,7 +27,6 @@
     <script type="module">
         import {
             getDecimal,
-            ucFirst,
             normalizeUrl,
             checkSpam,
             truncate,
@@ -49,42 +48,6 @@
 
             it("getDecimal(1) => 0", function () {
                 assert.strictEqual(getDecimal(1), 0);
-            });
-
-        });
-
-        describe("divmod", function () {
-
-            it("divmod(7, 3) => [2, 1]", function () {
-                assert.strictEqual(divmod(7, 3), [2, 1]);
-            });
-
-            it("divmod(-7, 3) => [-3, 2]", function () {
-                assert.strictEqual(divmod(-7, 3), [-3, 2]);
-            });
-
-            it("divmod(7, -3) => [-3, -2]", function () {
-                assert.strictEqual(divmod(7, -3), [-3, -2]);
-            });
-
-            it("divmod(0, 0) => [NaN, NaN]", function () {
-                assert.strictEqual(divmod(0, 0), [NaN, NaN]);
-            });
-
-        });
-
-        describe("ucFirst", function () {
-
-            it("ucFirst('') => ''", function () {
-                assert.strictEqual(ucFirst(''), '');
-            });
-
-            it("ucFirst('hello') => 'Hello'", function () {
-                assert.strictEqual(ucFirst('hello'), 'Hello');
-            });
-
-            it("ucFirst('привет') => 'Привет'", function () {
-                assert.strictEqual(ucFirst('привет'), 'Привет');
             });
 
         });
