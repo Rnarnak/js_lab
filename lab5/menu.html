@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню</title>
+        <style>
+        body { font-family: sans-serif; padding: 20px; }
+        
+        ul { 
+            list-style-type: none; 
+            padding-left: 0; 
+        }
+        
+        .menu-container {
+            margin-bottom: 10px;
+        }
+
+        .menu-item { 
+            cursor: pointer; 
+            font-weight: bold; 
+            display: inline-block;
+            padding: 5px 0;
+            user-select: none;
+        }
+        .menu-item::before {
+            content: '';
+            display: inline-block;
+            width: 0; 
+            height: 0; 
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid #333; 
+            
+            margin-right: 8px;
+            vertical-align: middle;
+            transition: transform 0.2s ease;
+    
+            transform-origin: center center; 
+        }
+
+        .open .menu-item::before {
+            transform: rotate(90deg);
+        }
+
+        .submenu { 
+            display: none; 
+            margin-left: 20px; 
+            list-style-type: disc; 
+        }
+
+        .open .submenu { 
+            display: block; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Раскрывающееся меню</h1>
+    
+    <ul>
+        <!-- Только Сладости -->
+        <li class="menu-container">
+            <span class="menu-item">Сладости (нажми меня)!</span>
+            <ul class="submenu">
+                <li>Торт</li>
+                <li>Пончик</li>
+                <li>Пирожное</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        'use strict';
+
+        const menuItem = document.querySelector('.menu-item');
+        const container = document.querySelector('.menu-container');
+
+        menuItem.addEventListener('click', () => {
+            container.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
