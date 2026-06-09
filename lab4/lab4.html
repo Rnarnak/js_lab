@@ -1,174 +1,102 @@
-/**
-Класс, представляющий книгу
-*/
-export class Book {
-    /** @type {string} - Название книги (внутреннее поле) */
-    _title;
-    /** @type {number} - Год издания (защищенное поле) */
-    _pubYear;
-    /** @type {number} - Цена книги (приватное поле) */
-    #price;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная работа №4</title>
+</head>
+<body>
+    <p>Lab 4</p>
 
-    /**
-    Конструктор для создания экземпляр книги
-    @param {string} title - Название книги (не может быть пустой строкой)
-    @param {number} pubYear - Год издания (положительное число)
-    @param {number} price - Цена книги (положительное число)
-    @throws {Error} Если валидация не пройдена
-    */
-    constructor(title, pubYear, price) {
-        this.title = title;
-        this._pubYear = pubYear;
-        this.#price = price;
-    }
+    <script type="module">
+        import { 
+            Book, 
+            isEmpty, 
+            addClassMethods, 
+            getSecondsToday, 
+            formatDate 
+        } from './lab4.js';
 
-    /**
-    Сеттер для названия книги
-    @param {string} value - Новое название
-    @throws {Error} Если название - пустая строка
-    */
-    set title(value) {
-        if (typeof value !== 'string' || value.trim() === '') {
-            throw new Error('Название книги не может быть пустой строкой');
+        // 1. Создание экземпляра класса Book и вызов метода show
+        const book1 = new Book("Война и мир", 1869, 500);
+        book1.show();
+
+        // 2. Попытка изменить значения свойств
+        const book2 = new Book("Преступление и наказание", 1866, 450);
+        console.log(`До изменения: ${book2.title}, ${book2.pubYear}, ${book2.price}`);
+        
+        book2.title = "Идиот";
+        book2.pubYear = 1868;
+        book2.price = 600;
+        console.log(`После изменения: ${book2.title}, ${book2.pubYear}, ${book2.price}`);
+        
+        // Попытка установить некорректные значения
+        try {
+            book2.title = "";
+        } catch(e) {
+            console.log(e.message);
         }
-        this._title = value;  // ИСПРАВЛЕНО: сохраняем во внутреннее поле
-    }
-
-    /**
-    Геттер для названия книги
-    @returns {string} Название книги
-    */
-    get title() {
-        return this._title;  // ИСПРАВЛЕНО читение из внутреннего поля
-    }
-
-    /**
-    Геттер для года издания
-    @returns {number} Год издания
-    */
-    get pubYear() {
-        return this._pubYear;
-    }
-
-    /**
-    Сеттер для года издания
-    @param {number} value - Новый год издания
-    @throws {Error} Если значение не является положительным числом
-    */
-    set pubYear(value) {
-        if (typeof value !== 'number' || isNaN(value) || value <= 0) {
-            throw new Error('Год издания должен быть положительным числом');
+        
+        try {
+            book2.pubYear = -2020;
+        } catch(e) {
+            console.log(e.message);
         }
-        this._pubYear = value;
-    }
-
-    /**
-    Геттер для цены книги
-    @returns {number} Цена книги
-    */
-    get price() {
-        return this.#price;
-    }
-
-    /**
-    Сеттер для цены книги
-    @param {number} value - Новая цена
-    @throws {Error} Если значение не является положительным числом
-    */
-    set price(value) {
-        if (typeof value !== 'number' || isNaN(value) || value <= 0) {
-            throw new Error('Цена должна быть положительным числом');
+        
+        try {
+            book2.price = -100;
+        } catch(e) {
+            console.log(e.message);
         }
-        this.#price = value;
-    }
 
-    /**
-    Метод, который выводит в консоль название и цену книги
-    */
-    show() {
-        console.log(`Книга: "${this.title}", Цена: ${this.#price} руб.`);
-    }
+        // 3. Сортировка массива книг
+        const books = [
+            new Book("Книга 1", 2000, 300),
+            new Book("Книга 2", 1995, 250),
+            new Book("Книга 3", 2010, 400)
+        ];
+        
+        console.log("До сортировки:");
+        books.forEach(book => console.log(`${book.title} - ${book.pubYear}`));
+        
+        books.sort(Book.compare);
+        
+        console.log("После сортировки:");
+        books.forEach(book => console.log(`${book.title} - ${book.pubYear}`));
 
-    /**
-    Статический метод для сравнения книг по году издания
-    @param {Book} a - Первая книга
-    @param {Book} b - Вторая книга
-    @returns {number} -1, если a раньше b; 1, если a позже b; 0, если равны
-    */
-    static compare(a, b) {
-        if (a._pubYear < b._pubYear) return -1;
-        if (a._pubYear > b._pubYear) return 1;
-        return 0;
-    }
-}
+        // 4. Проверка функции isEmpty
+        console.log(isEmpty({}));
+        console.log(isEmpty({ [Symbol()]: true }));
+        console.log(isEmpty(Object.defineProperty({}, 'name', { value: 'John' })));
 
-/**
-Проверяет, является ли объект пустым (не имеет собственных свойств, включая неперечисляемые и символьные).
-@param {Object} obj - Объект для проверки.
-@returns {boolean} Возвращает true, если у объекта нет собственных ключей, иначе false.
-*/
-export function isEmpty(obj) {
-    return Reflect.ownKeys(obj).length === 0;
-}
+        // 5. Проверка addClass и removeClass
+        let obj = { className: 'open menu' };
+        obj = addClassMethods(obj);
+        
+        obj.addClass('new').addClass('open').addClass('active');
+        console.log(obj.className);
+        
+        obj.removeClass('menu').removeClass('active');
+        console.log(obj.className);
 
-/**
-Добавляет методы addClass и removeClass к переданному объекту.
-Предполагается, что объект имеет свойство className (строка с классами через пробел).
-Методы поддерживают цепочку вызовов (возвращают this).
-@param {Object} obj - Объект, к которому нужно добавить методы. Должен иметь свойство className.
-@returns {Object} Тот же объект с добавленными методами.
-*/
-export function addClassMethods(obj) {
-    obj.addClass = function(cls) {
-        const classes = this.className ? this.className.split(' ') : [];
-        if (!classes.includes(cls)) {
-            classes.push(cls);
-            this.className = classes.join(' ');
-        }
-        return this;
-    };
-    
-    obj.removeClass = function(cls) {
-        const classes = this.className ? this.className.split(' ') : [];
-        const index = classes.indexOf(cls);
-        if (index !== -1) {
-            classes.splice(index, 1);
-            this.className = classes.join(' ');
-        }
-        return this;
-    };
-    
-    return obj;
-}
+        // 6. Преобразование в JSON
+        const testObj = {
+            name: "Тест",
+            nested: {
+                value: 123
+            }
+        };
+        
+        const json = JSON.stringify(testObj, null, 2);
+        console.log(json);
+        
+        const obj2 = JSON.parse(json);
+        console.log(JSON.stringify(testObj) === JSON.stringify(obj2));
 
-/**
-Возвращает колво секунд с начала дня
-@returns {number} Количество секунд с начала текущего дня.
-*/
-export function getSecondsToday() {
-    const now = new Date();
-    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    return Math.floor((now - startOfDay) / 1000);
-}
+        // 7. getSecondsToday
+        console.log(getSecondsToday());
 
-/**
-Форматирует дату в строку вида DD.MM.YY.
-@param {Date} date - Объект Date для форматирования.
-@returns {string} Строка с датой в формате DD.MM.YY
-*/
-export function formatDate(date) {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = String(date.getFullYear()).slice(-2);
-    return `${day}.${month}.${year}`;
-}
-
-/**
-Выполняет глубокое сравнение двух объектов путем их сериализации в JSON.
-@param {*} obj1 - Первый объект для сравнения.
-@param {*} obj2 - Второй объект для сравнения.
-@returns {boolean} Возвращает true, если JSON-представления объектов идентичны, иначе false.
-*/
-export function deepEqual(obj1, obj2) {
-    return JSON.stringify(obj1) === JSON.stringify(obj2);
-}
+        // 8. formatDate
+        console.log(formatDate(new Date()));
+    </script>
+</body>
+</html>
