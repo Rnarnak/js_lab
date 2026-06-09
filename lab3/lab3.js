@@ -1,100 +1,103 @@
 'use strict';
 
-import { fib } from '../lab3/lab2.js';
+Import { fib } from '../lab3/lab2.js';
+
 /**
- * возвращает дробную часть числа
- * @param {number} num - исходное число
+ * возвращает дробную часть числа, округленную до 2 знаков
+ * @param {number} num – исходное число
  * @returns {number} дробная часть числа
  */
-export function getDecimal(num) {
-    const fractional = num - Math.floor(num);
-    return Math.round(fractional * 100) / 100;
+Export function getDecimal(num) {
+    Const fractional = num – Math.floor(num);
+    Return Math.round(fractional * 100) / 100;
 }
 
 /**
  * нормализует URL, добавляя https:// в начало
- * @param {string} url - исходный URL
+ * @param {string} url – исходный URL
  * @returns {string} нормализованный URL с https://
  */
-export function normalizeUrl(url) {
-    let result = url.toLowerCase();
-    result = result.replace(/^https?:\/\//, '');
-    return 'https://' + result;
+Export function normalizeUrl(url) {
+    Let result = url.toLowerCase();
+    Result = result.replace(/^https?:\/\//, '');
+    Return 'https://' + result;
 }
 
 /**
  * проверяет наличие спама в строке (viagra или XXX)
- * @param {string} str - проверяемая строка
+ * @param {string} str – проверяемая строка
  * @returns {boolean} true, если строка содержит спам, иначе false
  */
-export function checkSpam(str) {
-    const lowerStr = str.toLowerCase();
-    return lowerStr.includes('viagra') || lowerStr.includes('xxx');
+Export function checkSpam(str) {
+    Const lowerStr = str.toLowerCase();
+    Return lowerStr.includes('viagra') || lowerStr.includes('xxx');
 }
 
 /**
  * усекает строку до заданной длины, добавляя многоточие в конце
- * @param {string} str - исходная строка
- * @param {number} maxlength - максимальная длина строки
+ * @param {string} str – исходная строка
+ * @param {number} maxlength – максимальная длина строки
  * @returns {string} усечённая строка
  */
-export function truncate(str, maxlength) {
-    if (str.length <= maxlength) {
-        return str;
+Export function truncate(str, maxlength) {
+    If (str.length <= maxlength) {
+        Return str;
     }
-    return str.slice(0, maxlength - 1) + '…';
+    Return str.slice(0, maxlength – 1) + '…';
 }
 
 /**
  * преобразует строку с дефисами в camelCase
- * @param {string} str - исходная строка (например, 'var-test-text')
+ * @param {string} str – исходная строка (например, 'var-test-text')
  * @returns {string} преобразованная строка в camelCase
  */
-export function camelize(str) {
-    const words = str.split('-');
-    for (let i = 1; i < words.length; i++) {
-        words[i] = ucFirst(words[i]);
+Export function camelize(str) {
+    Const words = str.split('-');
+    For (let i = 1; i < words.length; i++) {
+        Words[i] = ucFirst(words[i]);
     }
-    return words.join('');
+    Return words.join('');
 }
 
 /**
  * делает первую букву строки заглавной
- * @param {string} str - Исходная строка
+ * @param {string} str – Исходная строка
  * @returns {string} строка с заглавной первой буквой
  */
-function ucFirst(str) {
-    if (!str) return str;
-    return str[0].toUpperCase() + str.slice(1);
+Function ucFirst(str) {
+    If (!str) return str;
+    Return str[0].toUpperCase() + str.slice(1);
 }
 
 /**
  * возвращает массив чисел Фибоначчи до n-го (не включая его)
- * @param {number} n - количество чисел Фибоначчи (натуральное число)
+ * @param {number} n – количество чисел Фибоначчи (натуральное число)
  * @returns {bigint[]} массив чисел Фибоначчи
  */
-export function fibs(n) {
-    const result = [];
-    for (let i = 0; i < n; i++) {
-        result.push(fib(i));
+Export function fibs(n) {
+    Const result = [];
+    For (let i = 0; i < n; i++) {
+        Result.push(fib(i));
     }
-    return result;
+    Return result;
 }
 
 /**
  * возвращает новый массив, отсортированный по убыванию, не изменяя исходный
- * @param {Array[]} arr - исходный массив чисел
- * @returns {Array[]} новый массив, отсортированный по убыванию
+ * @template T
+ * @param {T[]} arr – исходный массив элементов
+ * @returns {T[]} новый массив, отсортированный по убыванию
  */
-export function arrReverseSorted(arr) {
-    return [...arr].sort((a, b) => b - a);
+Export function arrReverseSorted(arr) {
+    Return […arr].sort((a, b) => b – a);
 }
 
 /**
  * возвращает массив уникальных значений из исходного массива
- * @param {any[]} arr - исходный массив с возможными повторениями
- * @returns {any[]} массив уникальных значений
+ * @template T
+ * @param {T[]} arr – исходный массив с возможными повторениями
+ * @returns {T[]} массив уникальных значений
  */
-export function unique(arr) {
-    return [...new Set(arr)];
+Export function unique(arr) {
+    Return […new Set(arr)];
 }
