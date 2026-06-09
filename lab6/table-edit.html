@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Редактируемая таблица</title>
+    <title>Редактируемая таблица с сохранением</title>
     <style>
         table { border-collapse: collapse; width: 400px; }
         td { 
@@ -10,7 +10,7 @@
             padding: 5px; 
             height: 40px; 
             cursor: pointer; 
-            vertical-align: top; 
+            vertical-align: top;
         }
         .editing textarea { 
             width: 95%; 
@@ -22,6 +22,18 @@
         }
         .controls { display: flex; gap: 5px; margin-top: 5px; }
         .controls button { font-size: 12px; cursor: pointer; }
+        
+        .reset-btn {
+            margin-top: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .reset-btn:hover { background-color: #d32f2f; }
     </style>
 </head>
 <body>
@@ -31,6 +43,8 @@
         <tr><td>Ячейка 3</td><td>Ячейка 4</td></tr>
     </table>
 
+    <button class="reset-btn" onclick="resetTable()">Сбросить изменения</button>
+
     <script>
         'use strict';
 
@@ -38,14 +52,13 @@
         let currentCell = null;
         let originalContent = '';
 
+        loadTable();
+
         table.addEventListener('click', (e) => {
             const td = e.target.closest('td');
             if (!td) return;
             
-            // редакт до подтверждения
             if (currentCell && currentCell !== td) return;
-            
-            // игнорируем клики по кнопкам внутри редактируемой ячейки
             if (e.target.tagName === 'BUTTON') return;
 
             if (!currentCell) {
@@ -56,12 +69,9 @@
         function makeEditable(td) {
             currentCell = td;
             td.classList.add('editing');
-            
-            // Начальный текст
             originalContent = td.innerHTML;
             
             const textarea = document.createElement('textarea');
-            // textContent чистый текст без HTML-тегов
             textarea.value = td.textContent; 
             
             const divControls = document.createElement('div');
@@ -72,6 +82,7 @@
             btnOk.onclick = () => {
                 td.textContent = textarea.value; 
                 finishEditing();
+                saveTable(); 
             };
             
             const btnCancel = document.createElement('button');
@@ -92,6 +103,33 @@
             if (currentCell) {
                 currentCell.classList.remove('editing');
                 currentCell = null;
+            }
+        }
+
+        function saveTable() {
+            try {
+                
+                localStorage.setItem('editableTableData', table.innerHTML);
+            } catch (e) {
+                console.warn('Не удалось сохранить данные (возможно, отключен localStorage)', e);
+            }
+        }
+
+        function loadTable() {
+            try {
+                const savedData = localStorage.getItem('editableTableData');
+                if (savedData) {
+                    table.innerHTML = savedData;
+                }
+            } catch (e) {
+                console.warn('Не удалось загрузить данные', e);
+            }
+        }
+
+        function resetTable() {
+            if (confirm('Вы уверены, что хотите сбросить все изменения?')) {
+                localStorage.removeItem('editableTableData');
+                location.reload(); // Перезагружаем страницу для возврата к исходному HTML
             }
         }
     </script>
