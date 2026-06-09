@@ -1,103 +1,174 @@
-'use strict';
-
-Import { fib } from '../lab3/lab2.js';
-
 /**
- * возвращает дробную часть числа, округленную до 2 знаков
- * @param {number} num – исходное число
- * @returns {number} дробная часть числа
- */
-Export function getDecimal(num) {
-    Const fractional = num – Math.floor(num);
-    Return Math.round(fractional * 100) / 100;
-}
+Класс, представляющий книгу
+*/
+export class Book {
+    /** @type {string} - Название книги (внутреннее поле) */
+    _title;
+    /** @type {number} - Год издания (защищенное поле) */
+    _pubYear;
+    /** @type {number} - Цена книги (приватное поле) */
+    #price;
 
-/**
- * нормализует URL, добавляя https:// в начало
- * @param {string} url – исходный URL
- * @returns {string} нормализованный URL с https://
- */
-Export function normalizeUrl(url) {
-    Let result = url.toLowerCase();
-    Result = result.replace(/^https?:\/\//, '');
-    Return 'https://' + result;
-}
-
-/**
- * проверяет наличие спама в строке (viagra или XXX)
- * @param {string} str – проверяемая строка
- * @returns {boolean} true, если строка содержит спам, иначе false
- */
-Export function checkSpam(str) {
-    Const lowerStr = str.toLowerCase();
-    Return lowerStr.includes('viagra') || lowerStr.includes('xxx');
-}
-
-/**
- * усекает строку до заданной длины, добавляя многоточие в конце
- * @param {string} str – исходная строка
- * @param {number} maxlength – максимальная длина строки
- * @returns {string} усечённая строка
- */
-Export function truncate(str, maxlength) {
-    If (str.length <= maxlength) {
-        Return str;
+    /**
+    Конструктор для создания экземпляр книги
+    @param {string} title - Название книги (не может быть пустой строкой)
+    @param {number} pubYear - Год издания (положительное число)
+    @param {number} price - Цена книги (положительное число)
+    @throws {Error} Если валидация не пройдена
+    */
+    constructor(title, pubYear, price) {
+        this.title = title;
+        this._pubYear = pubYear;
+        this.#price = price;
     }
-    Return str.slice(0, maxlength – 1) + '…';
-}
 
-/**
- * преобразует строку с дефисами в camelCase
- * @param {string} str – исходная строка (например, 'var-test-text')
- * @returns {string} преобразованная строка в camelCase
- */
-Export function camelize(str) {
-    Const words = str.split('-');
-    For (let i = 1; i < words.length; i++) {
-        Words[i] = ucFirst(words[i]);
+    /**
+    Сеттер для названия книги
+    @param {string} value - Новое название
+    @throws {Error} Если название - пустая строка
+    */
+    set title(value) {
+        if (typeof value !== 'string' || value.trim() === '') {
+            throw new Error('Название книги не может быть пустой строкой');
+        }
+        this._title = value;  //сохраняем во внутреннее поле
     }
-    Return words.join('');
-}
 
-/**
- * делает первую букву строки заглавной
- * @param {string} str – Исходная строка
- * @returns {string} строка с заглавной первой буквой
- */
-Function ucFirst(str) {
-    If (!str) return str;
-    Return str[0].toUpperCase() + str.slice(1);
-}
-
-/**
- * возвращает массив чисел Фибоначчи до n-го (не включая его)
- * @param {number} n – количество чисел Фибоначчи (натуральное число)
- * @returns {bigint[]} массив чисел Фибоначчи
- */
-Export function fibs(n) {
-    Const result = [];
-    For (let i = 0; i < n; i++) {
-        Result.push(fib(i));
+    /**
+    Геттер для названия книги
+    @returns {string} Название книги
+    */
+    get title() {
+        return this._title;  // читаем из внутреннего поля
     }
-    Return result;
+
+    /**
+    Геттер для года издания
+    @returns {number} Год издания
+    */
+    get pubYear() {
+        return this._pubYear;
+    }
+
+    /**
+    Сеттер для года издания
+    @param {number} value - Новый год издания
+    @throws {Error} Если значение не является положительным числом
+    */
+    set pubYear(value) {
+        if (typeof value !== 'number' || isNaN(value) || value <= 0) {
+            throw new Error('Год издания должен быть положительным числом');
+        }
+        this._pubYear = value;
+    }
+
+    /**
+    Геттер для цены книги
+    @returns {number} Цена книги
+    */
+    get price() {
+        return this.#price;
+    }
+
+    /**
+    Сеттер для цены книги
+    @param {number} value - Новая цена
+    @throws {Error} Если значение не является положительным числом
+    */
+    set price(value) {
+        if (typeof value !== 'number' || isNaN(value) || value <= 0) {
+            throw new Error('Цена должна быть положительным числом');
+        }
+        this.#price = value;
+    }
+
+    /**
+    Метод, который выводит в консоль название и цену книги
+    */
+    show() {
+        console.log(`Книга: "${this.title}", Цена: ${this.#price} руб.`);
+    }
+
+    /**
+    Статический метод для сравнения книг по году издания
+    @param {Book} a - Первая книга
+    @param {Book} b - Вторая книга
+    @returns {number} -1, если a раньше b; 1, если a позже b; 0, если равны
+    */
+    static compare(a, b) {
+        if (a._pubYear < b._pubYear) return -1;
+        if (a._pubYear > b._pubYear) return 1;
+        return 0;
+    }
 }
 
 /**
- * возвращает новый массив, отсортированный по убыванию, не изменяя исходный
- * @template T
- * @param {T[]} arr – исходный массив элементов
- * @returns {T[]} новый массив, отсортированный по убыванию
- */
-Export function arrReverseSorted(arr) {
-    Return […arr].sort((a, b) => b – a);
+Проверяет, является ли объект пустым (не имеет собственных свойств, включая неперечисляемые и символьные).
+@param {Object} obj - Объект для проверки.
+@returns {boolean} Возвращает true, если у объекта нет собственных ключей, иначе false.
+*/
+export function isEmpty(obj) {
+    return Reflect.ownKeys(obj).length === 0;
 }
 
 /**
- * возвращает массив уникальных значений из исходного массива
- * @template T
- * @param {T[]} arr – исходный массив с возможными повторениями
- * @returns {T[]} массив уникальных значений
- */
-Export function unique(arr) {
-    Return […new Set(arr)];
+Добавляет методы addClass и removeClass к переданному объекту.
+Предполагается, что объект имеет свойство className (строка с классами через пробел).
+Методы поддерживают цепочку вызовов (возвращают this).
+@param {Object} obj - Объект, к которому нужно добавить методы. Должен иметь свойство className.
+@returns {Object} Тот же объект с добавленными методами.
+*/
+export function addClassMethods(obj) {
+    obj.addClass = function(cls) {
+        const classes = this.className ? this.className.split(' ') : [];
+        if (!classes.includes(cls)) {
+            classes.push(cls);
+            this.className = classes.join(' ');
+        }
+        return this;
+    };
+    
+    obj.removeClass = function(cls) {
+        const classes = this.className ? this.className.split(' ') : [];
+        const index = classes.indexOf(cls);
+        if (index !== -1) {
+            classes.splice(index, 1);
+            this.className = classes.join(' ');
+        }
+        return this;
+    };
+    
+    return obj;
+}
+
+/**
+Возвращает колво секунд с начала дня
+@returns {number} Количество секунд с начала текущего дня.
+*/
+export function getSecondsToday() {
+    const now = new Date();
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return Math.floor((now - startOfDay) / 1000);
+}
+
+/**
+Форматирует дату в строку вида DD.MM.YY.
+@param {Date} date - Объект Date для форматирования.
+@returns {string} Строка с датой в формате DD.MM.YY
+*/
+export function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2);
+    return `${day}.${month}.${year}`;
+}
+
+/**
+Выполняет глубокое сравнение двух объектов путем их сериализации в JSON.
+@param {*} obj1 - Первый объект для сравнения.
+@param {*} obj2 - Второй объект для сравнения.
+@returns {boolean} Возвращает true, если JSON-представления объектов идентичны, иначе false.
+*/
+export function deepEqual(obj1, obj2) {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
 }
