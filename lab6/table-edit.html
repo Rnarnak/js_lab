@@ -82,7 +82,7 @@
             btnOk.onclick = () => {
                 td.textContent = textarea.value; 
                 finishEditing();
-                saveTable(); // Сохраняем ПОСЛЕ того, как закрыли режим редактирования
+                saveTable(); // сейв таблицы 
             };
             
             const btnCancel = document.createElement('button');
@@ -106,7 +106,7 @@
             }
         }
 
-        // --- Изменения здесь: работаем с sessionStorage ---
+        // --- измененно с sessionStorage ---
 
         function saveTable() {
             try {
