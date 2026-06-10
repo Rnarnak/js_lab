@@ -18,9 +18,11 @@ export function getDecimal(num) {
  * @returns {string} Нормализованный URL с https://
  */
 export function normalizeUrl(url) {
-    let result = url.toLowerCase();
-    result = result.replace(/^https?:\/\//, '');
-    return 'https://' + result;
+  let result = url.toLowerCase();
+  // Экранируем слеши: \/
+  result = result.replace(/^https?:\/\//, ''); 
+  return 'https://' + result;
+}
 }
 
 /**
