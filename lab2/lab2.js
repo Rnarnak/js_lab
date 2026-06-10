@@ -5,127 +5,124 @@
 /**
  * №1 Возведение числа x в степень n.
  * Поддерживает отрицательные показатели степени.
- * * @param {number} x – Основание степени.
+ * @param {number} x – Основание степени.
  * @param {number} n – Показатель степени.
  * @returns {number} Результат возведения x в степень n.
  */
-Function pow(x, n) {
-  If (n === 0) return 1;
-  If (n < 0) {
-    X = 1 / x;
-    N = -n;
+function pow(x, n) {
+  if (n === 0) return 1;
+  if (n < 0) {
+    x = 1 / x;
+    n = -n;
   }
-  Let result = 1;
-  For (let i = 0; i < n; i++) {
-    Result *= x;
+  let result = 1;
+  for (let i = 0; i < n; i++) {
+    result *= x;
   }
-  Return result;
+  return result;
 }
 
 /**
  * №2 Функция вычисления суммы чисел от 1 до n, созданная через `new Function`.
- * * @global
+ * @global
  * @function sumTo
  * @param {number} n – Верхняя граница диапазона суммирования.
  * @returns {number} Сумма чисел от 1 до n.
  */
-Const sumTo = new Function('n', `
-  Let sum = 0;
-  For (let i = 1; i <= n; i++) {
-    Sum += i;
+const sumTo = new Function('n', `
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    sum += i;
   }
-  Return sum;
+  return sum;
 `);
 
 /**
  * №3 Проверка, является ли год високосным.
- * * @param {number} year – Проверяемый год.
+ * @param {number} year – Проверяемый год.
  * @returns {boolean} true, если год високосный, иначе false.
  */
-Function isLeapYear(year) {
-  Return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+function isLeapYear(year) {
+  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
 /**
  * №4 Вычисление факториала числа с использованием рекурсии.
  * Для вычислений больших значений используется тип BigInt.
- * * @param {number|bigint} n – Число, факториал которого нужно вычислить.
+ * @param {number|bigint} n – Число, факториал которого нужно вычислить.
  * @returns {bigint} Факториал числа в формате BigInt.
  */
-Function factorial(n) {
-  // Принудительно переводим аргумент в BigInt, чтобы не было путаницы
-  Const bigN = BigInt(n);
-  If (bigN === 0n || bigN === 1n) return 1n;
-  Return bigN * factorial(bigN – 1n);
+function factorial(n) {
+  const bigN = BigInt(n);
+  if (bigN === 0n || bigN === 1n) return 1n;
+  return bigN * factorial(bigN - 1n);
 }
 
 /**
  * №5 Вычисление n-го числа Фибоначчи.
  * Для предотвращения переполнения результат вычисляется в BigInt.
- * * @param {number|bigint} n – Порядковый номер числа Фибоначчи.
+ * @param {number|bigint} n – Порядковый номер числа Фибоначчи.
  * @returns {bigint} n-е число Фибоначчи в формате BigInt.
  */
-Function fib(n) {
-  // лимит в обычное число для безопасности счетчика цикла i
-  Const target = Number(n);
-  If (target === 0) return 0n;
-  If (target === 1) return 1n;
+function fib(n) {
+  const target = Number(n);
+  if (target === 0) return 0n;
+  if (target === 1) return 1n;
 
-  Let a = 0n;
-  Let b = 1n;
-  For (let i = 2; i <= target; i++) {
-    Let c = a + b;
-    A = b;
-    B = c;
+  let a = 0n;
+  let b = 1n;
+  for (let i = 2; i <= target; i++) {
+    let c = a + b;
+    a = b;
+    b = c;
   }
-  Return b;
+  return b;
 }
 
 /**
- * Функция, принимающая число x и возвращающая функцию сравнения с y.
- * * @param {number} x – Число для фиксации во внутренней области видимости (замыкании).
+ * №6 Функция, принимающая число x и возвращающая функцию сравнения с y.
+ * @param {number} x – Число для фиксации во внутренней области видимости (замыкании).
  * @returns {function(number): (boolean|null)} Функция, которая принимает число y и возвращает:
  * - `true`, если y > x;
  * - `false`, если y < x;
  * - `null`, если они равны.
  */
-Function compare(x) {
-  Return function(y) {
-    If (y > x) return true;
-    If (y < x) return false;
-    Return null;
+function compare(x) {
+  return function(y) {
+    if (y > x) return true;
+    if (y < x) return false;
+    return null;
   };
 }
 
 /**
  * №7 Вычисление суммы произвольного количества переданных аргументов.
- * * @param {…number} args – Набор чисел для суммирования.
+ * @param {...number} args – Набор чисел для суммирования.
  * @returns {number} Сумма всех переданных аргументов.
  */
-Function sum(…args) {
-  Return args.reduce((acc, current) => acc + current, 0);
+function sum(...args) {
+  return args.reduce((acc, current) => acc + current, 0);
 }
 
 /**
  * №8 Добавление «черной метки» (свойства со специальным символом) в объект
  * через глобальный реестр символов.
- * * @param {Object} obj – Исходный объект, в который добавляется метка.
- * @returns {Object} Модифицированный объект с добавленным символьным свойством.
+ * @param {Object} obj – Исходный объект, в который добавляется метка.
+ * @returns {Object} Модифицированный объект с добавленныи символьным свойством.
  */
-Function addBlackSpot(obj) {
-  Obj[Symbol.for(«blackSpot»)] = true;
-  Return obj;
+function addBlackSpot(obj) {
+  obj[Symbol.for('blackSpot')] = true;
+  return obj;
 }
 
 // Глобальный экспорт для браузера (чтобы Mocha видела функции в объекте window)
-If (typeof window !== 'undefined') {
-  Window.pow = pow;
-  Window.sumTo = sumTo;
-  Window.isLeapYear = isLeapYear;
-  Window.factorial = factorial;
-  Window.fib = fib;
-  Window.compare = compare;
-  Window.sum = sum;
-  Window.addBlackSpot = addBlackSpot;
+if (typeof window !== 'undefined') {
+  window.pow = pow;
+  window.sumTo = sumTo;
+  window.isLeapYear = isLeapYear;
+  window.factorial = factorial;
+  window.fib = fib;
+  window.compare = compare;
+  window.sum = sum;
+  window.addBlackSpot = addBlackSpot;
 }
-
