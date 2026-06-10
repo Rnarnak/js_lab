@@ -23,7 +23,7 @@ export function normalizeUrl(url) {
   result = result.replace(/^https?:\/\//, ''); 
   return 'https://' + result;
 }
-}
+
 
 /**
  * Проверяет наличие спама в строке (viagra или XXX)
